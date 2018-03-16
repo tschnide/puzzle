@@ -49,5 +49,8 @@ public class Board {
 //    public string tostring(){
 //
 //    }
-
+    public static void main(String[] args) {
+        assert 1 == 1;
+    }
 }
+
