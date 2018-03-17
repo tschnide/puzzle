@@ -12,14 +12,13 @@ public class Board {
         return board.length;
     }
 
-    public int hamming(){
+    public int hamming() {
         int hamming = 0;
 
-
-        for(int index = 0; index < board.length; index++){
-           if(board[index] != index + 1){                           // If the index equals the value stored in it it is in order.
-               hamming++;
-           }
+        for (int index = 0; index < board.length; index++) {
+            if (board[index] != index) {                           // If the index equals the value stored in it it is in order.
+                hamming++;
+            }
         }
 
         // Still working on the number of state changes that came before
@@ -49,8 +48,27 @@ public class Board {
 //    public string tostring(){
 //
 //    }
+
+    public static int[] makeOrderedArray(int size) {
+
+        int[] orderedArray = new int[size];
+        // Begin at one
+        for (int n = 1; n < size; n++) {
+            orderedArray[n] = n;
+        }
+
+        return orderedArray;
+    }
+
     public static void main(String[] args) {
-        assert 1 == 1;
+        int size = 9;
+
+        Board b1 = new Board(makeOrderedArray(size));
+        assert b1.size() == size;
+
+        Board b2 = new Board(makeOrderedArray(size));
+        assert b2.hamming() == 0;
+
     }
 }
 
