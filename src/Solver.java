@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.MinPQ;
+
 import java.util.Iterator;
 
 public class Solver {
@@ -12,6 +14,8 @@ public class Solver {
 
     public Solver(Board initial){
         board = initial;
+    MinPQ mpq = new MinPQ();
+    
     }
 
     public int moves(){
