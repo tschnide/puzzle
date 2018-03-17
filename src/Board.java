@@ -1,33 +1,54 @@
 import java.util.Iterator;
 
 public class Board {
-    private int[] board;
+    private int[][] board;
 
     // For now I'm just using a single dimensional array, converting later will be easy.
-    public Board(int[] board) {
+    public Board(int[][] board) {
         this.board = board;
     }
 
     public int size() {
-        return board.length;
+        int y = board.length;
+        int x = board[0].length;
+        return x * y;
     }
 
     public int hamming() {
         int hamming = 0;
+        int position = 1;
+        int y = board.length;
+        int x = board[0].length;
 
-        for (int index = 0; index < board.length; index++) {
-            if (board[index] != index) {                           // If the index equals the value stored in it it is in order.
-                hamming++;
+        for (int row = 0; row < y; row++) {
+            for (int column = 0; column < x; column++) {
+                if(position != board[row][column]){
+                    hamming++;
+                }
             }
         }
 
-        // Still working on the number of state changes that came before
         return hamming;
     }
-//
-//    public int manhattan(){
-//
-//    }
+
+    public int manhattan(){
+        // There may be a better way...
+        // distances
+        // find row difference
+        // find column difference
+        // add them up
+        // repeat for each tile
+        int manhattan = 0;
+
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board.length; column++) {
+                
+            }
+        }
+
+        return manhattan;
+    }
+
 //
 //    public boolean isgoal(){
 //
@@ -49,24 +70,27 @@ public class Board {
 //
 //    }
 
-    public static int[] makeOrderedArray(int size) {
+    public static int[][] makeOrderedArray(int y, int x) {
+        int[][] orderedArray = new int[y][x];
+        int count = 1;
 
-        int[] orderedArray = new int[size];
-        // Begin at one
-        for (int n = 1; n < size; n++) {
-            orderedArray[n] = n;
+        for (int row = 0; row < y; row++) {
+            for (int column = 0; column < x; column++) {
+                orderedArray[row][column] = count++;
+            }
         }
 
         return orderedArray;
     }
 
     public static void main(String[] args) {
-        int size = 9;
+        int y = 3;
+        int x = 3;
 
-        Board b1 = new Board(makeOrderedArray(size));
-        assert b1.size() == size;
+        Board b1 = new Board(makeOrderedArray(y, x));
+        assert b1.size() == y * x;
 
-        Board b2 = new Board(makeOrderedArray(size));
+        Board b2 = new Board(makeOrderedArray(y, x));
         assert b2.hamming() == 0;
 
     }
