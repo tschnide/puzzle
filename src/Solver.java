@@ -1,4 +1,6 @@
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.awt.print.Book;
 import java.util.Comparator;
@@ -7,8 +9,9 @@ import java.util.LinkedList;
 
 public class Solver {
 
-    private Board board;
-    public class Node {
+    private final Board board = null;
+
+   private final class Node {
         public Board board;
         public int moves;
         public int priority;
@@ -30,19 +33,10 @@ public class Solver {
             first.priority = first.moves + first.board.hamming();
             first.previous = null;
 
-            MinPQ mpq = new MinPQ(BoardComparator.priorityCompare());
-
+            MinPQ<Solver.Node> mpq = new MinPQ<Node>(new BoardComparator().priorityCompare());
             while (first.board.hamming() != 0) {
 
                 for (Board m : first.board.neighbors()) {
-//                    System.out.println("board being inserted is ");
-//                    System.out.println("the hamming distance is " + m.hamming());
-//                    for (int row = 0; row < m.blocks.length; row++) {
-//                        for (int column = 0; column < m.blocks.length; column++) {
-//                            System.out.print(m.blocks[row][column]);
-//                        }
-//                        System.out.println();
-//                    }
                     Node n = new Node();
                     n.board = m;
                     n.moves = first.moves + 1;
@@ -52,13 +46,10 @@ public class Solver {
                 }
 
                 Node oldFirst = first;
-                first = (Solver.Node) mpq.delMin();
-//            System.out.println("first " + first.previous);
-//            System.out.println("oldfirst " + oldFirst.previous);
+                first = mpq.delMin();
 
 
             }
-//            System.out.println("done");
         }
         } catch (IllegalArgumentException err1){
             throw new IllegalArgumentException("This board is not solvable.");
@@ -83,39 +74,69 @@ public class Solver {
         return solutions;
     }
 
-    public static int[][] makeTwoDArray(int y, int x) {
-        int[][] twoDArray = new int[y][x];
-        int incrementation = 1;
+//    public static int[][] makeTwoDArray(int y, int x) {
+//        int[][] twoDArray = new int[y][x];
+//        int incrementation = 1;
+//
+//        for (int row = 0; row < y; row++) {
+//            for (int column = 0; column < x; column++) {
+//                twoDArray[row][column] = incrementation;
+//                incrementation++;
+//            }
+//        }
+//        return twoDArray;
+//    }
 
-        for (int row = 0; row < y; row++) {
-            for (int column = 0; column < x; column++) {
-                twoDArray[row][column] = incrementation;
-//                System.out.print(twoDArray[row][column]);
-                incrementation++;
-            }
-//            System.out.println();
+    class BoardComparator implements Comparator<Solver.Node>{
+
+        public Comparator<Solver.Node> priorityCompare(){
+            return new Comparator<Solver.Node>() {
+                @Override
+                public int compare(Solver.Node n1, Solver.Node n2) {
+                    return n1.priority - n2.priority;
+                }
+            };
         }
 
-        twoDArray[2][0] = 0;
-        twoDArray[2][1] = 7;
-        twoDArray[2][2] = 8;
-
-        return twoDArray;
+        @Override
+        public int compare(Solver.Node o1, Solver.Node o2) {
+            return 0;
+        }
     }
 
     public static void main(String[] args) {
 //        int[][] arr = makeTwoDArray(3, 3);
-        int[][] arr = {{1, 2, 3}, {4 ,5 ,6}, {0, 7, 8}};
-        Board b = new Board(arr);
+//        int[][] arr = {{1, 2, 3}, {4 ,5, 0}, {7, 8, 6}};
+//        board b = new board(arr);
 //        Board b = null;
-        Solver s = new Solver(b);
-        System.out.println("the number of moves was: " + s.moves());
-        System.out.println("the solutions are ");
+//        Solver s = new Solver(b);
+//        System.out.println("the number of moves was: " + s.moves());
+//        System.out.println("the solutions are ");
+//
+//        for(Board x : s.solution()){
+//            System.out.println(x);
+//        }
+//
+        In in = new In(args[0]);
+        int N = in.readInt();
+        int[][] blocks = new int[N][N];
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                blocks[i][j] = in.readInt();
+        Board initial = new Board(blocks);
 
-        for(Board x : s.solution()){
-            System.out.println(x);
+        // check if puzzle is solvable; if so, solve it and output solution
+        if (initial.isSolvable()) {
+            Solver solver = new Solver(initial);
+            StdOut.println("Minimum number of moves = " + solver.moves());
+            for (Board board : solver.solution())
+                StdOut.println(board);
         }
 
+        // if not, report unsolvable
+        else {
+            StdOut.println("Unsolvable puzzle");
+        }
     }
-
 }
+

@@ -9,8 +9,12 @@
  * @author smaxreiter
  ******************************************************
  */
+//package a04;
 
-        import java.util.LinkedList;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.LinkedList;
 
 
 public class Board {
@@ -240,7 +244,7 @@ public class Board {
      */
     private Board getNeighbor(int row1, int col1, int row2, int col2) {
         Board newBoard = new Board(blocks);
-        newBoard  = new Board(newBoard.exch(row1, col1, row2, col2));
+        newBoard.exch(row1, col1, row2, col2);
         return newBoard;
     }
 
@@ -289,33 +293,56 @@ public class Board {
         return str.toString();
     }
 
-    public static int[][] makeTwoDArray(int y, int x) {
-        int[][] twoDArray = new int[y][x];
-        int incrementation = 0;
-
-        for (int row = 0; row < y; row++) {
-            for (int column = 0; column < x; column++) {
-                twoDArray[row][column] = incrementation;
-                System.out.print(twoDArray[row][column]);
-                incrementation++;
-            }
-            System.out.println();
-        }
-
-        return twoDArray;
-    }
-
-    public static void main(String[] args) {
-
-        Board b1 = new Board(makeTwoDArray(3,3));
-        // Size test
-        assert b1.size() == 9 : "Problem with size";
-        // Tile test
-        assert b1.tile(0,0) == 0 : "Problem with tile";
-
-        System.out.println("hamming " + b1.hamming());
-    }
-
 }
 
-
+///**
+// * Stephen Max Reiter
+// * 2420
+// * Darrin Hunter
+// * March 12th 2018
+// * BoardMain.java
+// * @author smaxreiter
+// *
+// */
+//package a04;
+//
+//        import edu.princeton.cs.algs4.In;
+//        import edu.princeton.cs.algs4.StdOut;
+//
+//public class BoardMain {
+//
+//    public static void main(String[] args) {
+//        String filename = "/a04/puzzle1.txt";
+//        In in = new In(filename);
+//        int N = in.readInt();
+//        System.out.printf("NxN = %d x %d %n%n ", N,N);
+//
+//        int[][] blocks = new int[N][N];
+//
+//        for (int row = 0; row < N; row++) {
+//            for (int col = 0; col < N; col++) {
+//                blocks[row][col] = in.readInt();
+//            }
+//        }
+//
+//        Board board = new Board(blocks);
+//        StdOut.println(board.toString());
+//
+//        System.out.println("board size: " + board.size());
+//        System.out.println("hamming: " + board.hamming());
+//        System.out.println("manhattan: " + board.manhattan());
+//        System.out.println("goal: " + board.isGoal());
+//        // System.out.println(board);
+//        System.out.println("");
+//        System.out.println("Neighbors: ");
+//        Iterable<Board> it = board.neighbors();
+//
+//        for (Board b : it) {
+//            System.out.println(b);
+//        }
+//
+//        System.out.println("\nTwin:" + board.twin());
+//        // System.out.println(board);
+//    }
+//
+//}
