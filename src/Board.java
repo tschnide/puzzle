@@ -40,9 +40,7 @@ public class Board {
      * board size N
      */
     public int size() {
-        int y = blocks.length;
-        int x = blocks[0].length;
-        return x * y;
+        return blocks.length;
     }
 
     /*
@@ -242,7 +240,7 @@ public class Board {
      */
     private Board getNeighbor(int row1, int col1, int row2, int col2) {
         Board newBoard = new Board(blocks);
-        newBoard.exch(row1, col1, row2, col2);
+        newBoard  = new Board(newBoard.exch(row1, col1, row2, col2));
         return newBoard;
     }
 
@@ -293,13 +291,15 @@ public class Board {
 
     public static int[][] makeTwoDArray(int y, int x) {
         int[][] twoDArray = new int[y][x];
-        int incrementation = 1;
+        int incrementation = 0;
 
         for (int row = 0; row < y; row++) {
             for (int column = 0; column < x; column++) {
                 twoDArray[row][column] = incrementation;
+                System.out.print(twoDArray[row][column]);
                 incrementation++;
             }
+            System.out.println();
         }
 
         return twoDArray;
@@ -311,7 +311,9 @@ public class Board {
         // Size test
         assert b1.size() == 9 : "Problem with size";
         // Tile test
-        assert b1.tile(0,0) == 1 : "Problem with tile";
+        assert b1.tile(0,0) == 0 : "Problem with tile";
+
+        System.out.println("hamming " + b1.hamming());
     }
 
 }
