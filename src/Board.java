@@ -7,8 +7,9 @@
  * Board.java
  *
  * @author smaxreiter
- ******************************************************
- */
+ *****************************************************/
+
+//import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
 
 import java.util.LinkedList;
 
@@ -161,13 +162,15 @@ public class Board {
      */
     public boolean isSolvable() {
         Board board = new Board(blocks);
-
-        int inversion = board.hamming() % 2;
-        if (inversion == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        // take the side size
+        // iterate through to find how many numbers e
+//        int inversion = board.hamming() % 2;
+//        if (inversion == 0) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return true;
     }
 
     /*
@@ -241,6 +244,13 @@ public class Board {
     private Board getNeighbor(int row1, int col1, int row2, int col2) {
         Board newBoard = new Board(blocks);
         newBoard.exch(row1, col1, row2, col2);
+        System.out.println("From get neighbor I think this is the issue. Maybe in exch()?: ");
+        for (int x = 0; x < 3; x++) {
+            for (int i  = 0; i < 3; i ++) {
+                System.out.print(newBoard.blocks[x][i]);
+            }
+            System.out.println();
+        }
         return newBoard;
     }
 

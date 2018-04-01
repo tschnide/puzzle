@@ -14,12 +14,13 @@ import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Solver {
 
     private final Board board = null;
-    
+
     /*
      *  Each board is placed in a node and put into a linked list.
      */
@@ -49,8 +50,7 @@ public class Solver {
                 first.previous = null;
 
                 MinPQ<Solver.Node> mpq = new MinPQ<Node>(new BoardComparator().priorityCompare());
-                while (first.board.manhattan() != 0) {
-
+                while (first.board.isGoal() != true) {
                     for (Board m : first.board.neighbors()) {
                         Node n = new Node();
                         n.board = m;
@@ -58,6 +58,15 @@ public class Solver {
                         n.priority = n.moves + n.board.manhattan();
                         n.previous = first;
                         mpq.insert(n);
+                    }
+
+                // TODO delete this
+                    System.out.println("Neighbors: ");
+                    System.out.print(first.board.neighbors());
+                MinPQ<Solver.Node> foo = mpq;
+                    System.out.println("Contents of pq: ");
+                    while(foo.isEmpty() != true){
+                        System.out.print(foo.delMin().board.toString());
                     }
 
                     Node oldFirst = first;
@@ -147,4 +156,3 @@ public class Solver {
         }
     }
 }
-
